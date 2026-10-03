@@ -239,3 +239,5 @@ body.invitation-closed{overflow:hidden}.envelope-intro{position:fixed;inset:0;z-
 .bottom-bouquet{display:block;width:min(100%,460px);max-height:none;height:auto;object-fit:contain;margin:12px auto -14px}.portrait-wrap{background:var(--paper)}@media(max-width:600px){.bottom-bouquet{width:min(100%,360px);margin-top:6px}}
 
 .gentle-reminder{text-align:center;background:var(--paper);padding:44px 24px;color:var(--ink)}.gentle-reminder h2{font:400 26px/1.2 var(--serif);letter-spacing:1px;margin:24px 0}.gentle-reminder p{font:400 20px/1.9 var(--serif);letter-spacing:1px}.gentle-reminder .ornament{margin:0 auto}
+
+.snap-and-share{background:var(--paper)}
