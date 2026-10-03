@@ -208,3 +208,6 @@ html{scroll-padding-top:84px}
 .qr-view-link{display:inline-block;padding:8px 4px;font-size:16px}
 @media(min-width:601px){.couple-photo{max-height:760px}.first-photo{aspect-ratio:1}.portrait-photo{aspect-ratio:1}.closing-photo{aspect-ratio:1}.golden-photo{aspect-ratio:1}.story-photo .story-portrait{max-height:620px;object-fit:cover}.name-section{min-height:430px}.name-section h1{font-size:100px}.name-garland{height:410px}.right-garland{height:410px;width:164px}.bottom-bouquet{max-height:460px;object-fit:contain;object-position:center bottom}.opening blockquote{font-size:21px;max-width:280px}.monogram img{width:260px}.opening>.small-caps{font-size:14px}.family-section{font-size:19px}.paired-group li,.entourage-teams li{font-size:19px}.thank-you img{max-width:560px}.signature{font-size:56px!important}.thank-you>.signature{font-size:72px!important}}
 @media(max-width:600px){.bank-qr-grid{grid-template-columns:1fr;max-width:310px;gap:20px}.bank-qr-card{padding:18px}.bank-qr-card figcaption{min-height:0}.gift-section,.attendance-section,.dress-section{padding-left:24px;padding-right:24px}}
+
+/* Keep the invitation paper and photo edges flush with the browser. */
+.invitation-panels{max-width:none;width:100%;margin:0;padding:0}
