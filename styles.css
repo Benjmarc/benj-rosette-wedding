@@ -176,3 +176,10 @@ html{scroll-padding-top:84px}
 .faq-item p,.snap-and-share>p{font:400 18px/1.4 var(--serif)}
 .photo-upload-link{font:400 16px/1.2 var(--serif);letter-spacing:.5px}
 @media(max-width:600px){.wedding-faqs>h2,.snap-and-share>h2{font-size:26px}.faq-item h3{font-size:20px}.faq-item p,.snap-and-share>p{font-size:18px}.photo-upload-link{font-size:16px}}
+
+.dress-section>p:not(.dress-style){font:18px/1.4 var(--serif);max-width:430px;margin:0 auto}
+.dress-palette{margin:28px auto 0}
+.dress-palette h3{text-transform:uppercase;font:15px/1.3 var(--serif);letter-spacing:1px;margin-bottom:16px}
+.dress-palette ul{display:flex;flex-wrap:wrap;justify-content:center;gap:16px 18px;list-style:none;margin:0;padding:0}
+.dress-palette li{font:14px/1.3 var(--serif);display:flex;align-items:center;flex-direction:column;gap:8px}
+.dress-palette li>span{display:block;width:38px;height:38px;border-radius:50%;background:var(--swatch);border:1px solid #50392d33;box-shadow:inset 0 0 0 3px #ffffff33}
