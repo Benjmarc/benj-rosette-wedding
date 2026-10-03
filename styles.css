@@ -99,3 +99,18 @@ body{background:var(--paper)}
 
 /* Crop the roof strip above the umbrella portrait beneath the florals. */
 .golden-photo img{height:115%;top:-15%;object-position:82% bottom}
+
+/* Floating navigation keeps the invitation free of a header. */
+.menu-toggle{position:fixed;top:max(16px,env(safe-area-inset-top));right:18px;z-index:25;display:flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:30px;background:var(--paper);color:var(--ink);padding:12px 16px;box-shadow:0 3px 14px #50392d26;font:14px var(--sans)}
+#wedding-menu{position:fixed;inset:0 0 0 auto;margin:0;width:min(360px,90vw);max-width:none;height:100dvh;max-height:100dvh;border:0;border-left:1px solid var(--line);border-radius:0;padding:64px 28px 28px;background:var(--paper);color:var(--ink);text-align:left;overflow-y:auto;box-shadow:-8px 0 35px #50392d33}
+#wedding-menu::backdrop{background:#35271f66}
+.menu-close{position:absolute;top:14px;right:18px;width:44px;height:44px;border:1px solid var(--line);border-radius:50%;background:transparent;color:var(--ink);font-size:30px;line-height:1}
+.menu-names{font:38px/1.4 'Great Vibes',cursive;text-align:center}
+.wedding-menu>.small-caps{text-align:center;font-size:11px}
+#wedding-menu h2{font:12px var(--sans);letter-spacing:2px;margin:24px 0 14px;color:var(--muted)}
+.wedding-menu nav{display:grid}
+.wedding-menu nav a{padding:12px 0;border-bottom:1px solid #bba48b55;font:21px/1.2 var(--serif)}
+.wedding-menu nav a:hover,.wedding-menu nav a[aria-current="location"]{color:var(--rust)}
+body.menu-is-open{overflow:hidden}
+@media(max-width:600px){.menu-toggle{top:max(12px,env(safe-area-inset-top));right:12px;padding:10px 13px;font-size:12px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}

@@ -192,3 +192,25 @@ musicToggle.addEventListener('click', async () => {
 weddingMusic.addEventListener('play', updateMusicControl);
 weddingMusic.addEventListener('pause', updateMusicControl);
 window.addEventListener('pagehide', () => weddingMusic.pause());
+
+const weddingMenu = document.querySelector('#wedding-menu');
+const menuToggle = document.querySelector('#open-menu');
+menuToggle.addEventListener('click', () => {
+  weddingMenu.querySelectorAll('nav a').forEach(link => {
+    if (link.hash === (location.hash || '#home')) link.setAttribute('aria-current', 'location');
+    else link.removeAttribute('aria-current');
+  });
+  weddingMenu.showModal();
+  menuToggle.setAttribute('aria-expanded', 'true');
+  document.body.classList.add('menu-is-open');
+});
+document.querySelector('#close-menu').addEventListener('click', () => weddingMenu.close());
+weddingMenu.querySelectorAll('nav a').forEach(link => link.addEventListener('click', () => weddingMenu.close()));
+weddingMenu.addEventListener('click', event => {
+  const bounds = weddingMenu.getBoundingClientRect();
+  if (event.target === weddingMenu && (event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom)) weddingMenu.close();
+});
+weddingMenu.addEventListener('close', () => {
+  menuToggle.setAttribute('aria-expanded', 'false');
+  document.body.classList.remove('menu-is-open');
+});

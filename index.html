@@ -8,10 +8,18 @@
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='20' fill='%23f5efe5'/%3E%3Ctext x='20' y='28' text-anchor='middle' font-family='serif' font-size='28' fill='%237c4631'%3E%26%3C/text%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:wght@400;500;600&family=Italianno&family=Great+Vibes&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=photo-edge-cleanup-1">
+  <link rel="stylesheet" href="styles.css?v=section-menu-1">
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to invitation</a>
+
+<button type="button" class="menu-toggle" id="open-menu" aria-label="Open wedding menu" aria-controls="wedding-menu" aria-expanded="false"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg><span>Menu</span></button>
+<dialog id="wedding-menu" class="wedding-menu" aria-labelledby="menu-title">
+ <button type="button" id="close-menu" class="menu-close" aria-label="Close wedding menu">×</button>
+ <p class="menu-names">Benj &amp; Rosette</p><p class="small-caps">December 15, 2026</p>
+ <div class="ornament" aria-hidden="true"></div><h2 id="menu-title">Explore our wedding</h2>
+ <nav aria-label="Wedding sections"><a href="#home">Home</a><a href="#our-story">Our Love Story</a><a href="#invitation">Our Families</a><a href="#celebration">Our Wedding Day</a><a href="#ceremony">Ceremony &amp; Reception</a><a href="#order-of-events">Order of Events</a><a href="#details">Dress Code</a><a href="#gifts">Gift Suggestion</a><a href="#rsvp">RSVP &amp; Contacts</a></nav>
+</dialog>
 
 <main class="invitation-panels" id="main">
 <article class="paper-panel story-panel" id="home">
@@ -51,9 +59,9 @@
 </article>
 <article class="paper-panel day-panel" id="our-day">
  <div class="portrait-wrap"><div class="couple-photo portrait-photo torn-bottom" role="img" aria-label="Benj embracing Rosette as she holds a bouquet"><img src="benj-rosette-second-cropped.jpg" alt="" aria-hidden="true"></div><img class="portrait-sprig" src="diagonal-sprig.png" alt=""></div>
- <section class="event ceremony"><svg class="line-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><path d="M7 41h34M12 41V20l12-11 12 11v21M24 3v9m-4-5h8M20 41V29h8v12M18 21h12"/></svg><p class="event-time">2:00 PM</p><h2>Ceremony</h2><div class="ornament"></div><h3>Saint Joseph The Worker Chapel</h3><p>Pedro Reyes St., Malagasang 1-G<br>Imus City, Cavite</p><a class="button" href="https://www.google.com/maps/search/?api=1&amp;query=Saint+Joseph+The+Worker+Chapel%2C+Pedro+Reyes+St.%2C+Malagasang+1-G%2C+Imus+City%2C+Cavite" target="_blank" rel="noopener noreferrer">View church location</a></section>
+ <section class="event ceremony" id="ceremony"><svg class="line-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><path d="M7 41h34M12 41V20l12-11 12 11v21M24 3v9m-4-5h8M20 41V29h8v12M18 21h12"/></svg><p class="event-time">2:00 PM</p><h2>Ceremony</h2><div class="ornament"></div><h3>Saint Joseph The Worker Chapel</h3><p>Pedro Reyes St., Malagasang 1-G<br>Imus City, Cavite</p><a class="button" href="https://www.google.com/maps/search/?api=1&amp;query=Saint+Joseph+The+Worker+Chapel%2C+Pedro+Reyes+St.%2C+Malagasang+1-G%2C+Imus+City%2C+Cavite" target="_blank" rel="noopener noreferrer">View church location</a></section>
  <section class="event reception"><p class="event-time">4:00 PM</p><h2>Reception</h2><div class="ornament"></div><h3>Priscilla Crystal Palace</h3><p>San Sebastian<br>Kawit, Cavite</p><a class="button" href="https://www.google.com/maps/search/?api=1&amp;query=Priscilla+Crystal+Palace%2C+San+Sebastian%2C+Kawit%2C+Cavite" target="_blank" rel="noopener noreferrer">View reception location</a></section>
- <section class="itinerary"><h2>Order of events</h2><div class="ornament"></div><ol>
+ <section class="itinerary" id="order-of-events"><h2>Order of events</h2><div class="ornament"></div><ol>
 <li><svg class="line-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><path d="M10 41V11h28v30M16 41V17h16v24M27 29h1"/></svg><span>Guests’ arrival</span><time>1 PM</time></li>
 <li><svg class="line-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><path d="M7 41h34M12 41V20l12-11 12 11v21M24 3v9m-4-5h8M20 41V29h8v12M18 21h12"/></svg><span>Wedding ceremony</span><time>2 PM</time></li>
 <li><svg class="line-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><rect x="6" y="13" width="36" height="26" rx="3"/><path d="M15 13l3-6h12l3 6"/><circle cx="24" cy="26" r="8"/></svg><span>Portraits</span><time>3 PM</time></li>
@@ -70,7 +78,7 @@
  <svg class="dress-figures" viewBox="0 0 100 110" aria-hidden="true"><g fill="#292723"><circle cx="28" cy="12" r="6"/><path d="M18 24l10-4 10 4 5 38-6 2-4-29 1 38-2 31h-7l-1-31-2 31h-7l4-31 1-38-4 29-6-2z"/><path d="M26 23h4l-1 25z" fill="#f5efe5"/><circle cx="69" cy="12" r="6"/><path d="M62 24l7-4 7 4 8 25-6 3-5-17 2 20 16 43q-20 10-43 0l16-43 1-20-5 17-6-3z"/></g></svg>
  <p>We kindly ask our guests to avoid<br>wearing white, beige, or ivory.<br>Thank you for helping us keep<br>our special day picture-perfect.</p></section>
  <div class="ornament"></div>
- <section class="gift-section"><svg class="line-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><path d="M7 20h34v7H7zM10 27v15h28V27M24 20v22M24 20C8 20 12 3 20 9c3 3 4 11 4 11zm0 0c16 0 12-17 4-11-3 3-4 11-4 11z"/></svg><h2>Gift suggestion</h2><p>Your presence is the greatest gift of all.<br>However, if you wish to honor us with<br>a gift, monetary gifts or bank transfers<br>are warmly appreciated.</p><h3>Gift envelopes</h3><p>Available at the reception</p><h3>Bank transfer</h3><p class="bank-pending">Bank details will be shared by the couple.</p></section>
+ <section class="gift-section" id="gifts"><svg class="line-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><path d="M7 20h34v7H7zM10 27v15h28V27M24 20v22M24 20C8 20 12 3 20 9c3 3 4 11 4 11zm0 0c16 0 12-17 4-11-3 3-4 11-4 11z"/></svg><h2>Gift suggestion</h2><p>Your presence is the greatest gift of all.<br>However, if you wish to honor us with<br>a gift, monetary gifts or bank transfers<br>are warmly appreciated.</p><h3>Gift envelopes</h3><p>Available at the reception</p><h3>Bank transfer</h3><p class="bank-pending">Bank details will be shared by the couple.</p></section>
  <div class="ornament"></div>
  <section class="attendance-section" id="rsvp"><svg class="line-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><rect x="8" y="10" width="32" height="31" rx="2"/><path d="M8 19h32M16 5v10M32 5v10M15 25h4m5 0h4m5 0h2M15 32h4m5 0h4m5 0h2"/></svg><h2>Confirm attendance</h2><p>Please confirm your attendance.<br>We can’t wait to celebrate with you.</p><button class="button" id="open-rsvp" type="button">Confirm attendance</button><div class="contact-buttons"><a class="button" href="https://www.facebook.com/rosetteadrienne" target="_blank" rel="noopener noreferrer">Contact the bride</a><a class="button" href="https://www.facebook.com/benjmarc/" target="_blank" rel="noopener noreferrer">Contact the groom</a></div><p class="signature">Benj &amp; Rosette</p></section>
  <section class="thank-you"><p class="small-caps">We look forward to<br>celebrating with you</p><p class="signature">Thank You!</p><img src="bottom-bouquet.png" alt=""></section>
@@ -83,5 +91,5 @@
 <button type="button" id="music-toggle" class="music-toggle" aria-label="Play wedding music" aria-pressed="false"><span aria-hidden="true">♫</span> <span id="music-label">Play music</span></button>
 <p id="music-status" class="music-status" role="status" hidden></p>
 <script src="rsvp-config.js?v=calendar-1"></script>
-<script src="script.js?v=music-1"></script>
+<script src="script.js?v=section-menu-1"></script>
 </body></html>
