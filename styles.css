@@ -66,3 +66,12 @@ body{background:var(--paper)}
 
 .monogram img{display:block;width:230px;max-width:85%;height:auto;object-fit:contain}
 @media(max-width:380px){.monogram img{width:205px}}
+
+.love-story{padding:38px 28px 10px;text-align:center}
+.love-story h2{font:30px/1.15 var(--serif);font-weight:400;margin:10px 0 18px;text-transform:uppercase;letter-spacing:1px}
+.love-story>p:not(.small-caps){font:17px/1.6 var(--serif);margin:24px auto;max-width:360px}
+.love-story>.small-caps{color:var(--rust);font-size:11px;letter-spacing:3px}
+.story-photo{margin:28px -28px;overflow:hidden}
+.story-photo img{display:block;width:100%;height:auto}
+.love-story>.story-closing{font-style:italic;color:var(--rust)}
+@media(max-width:380px){.love-story{padding-left:24px;padding-right:24px}.story-photo{margin-left:-24px;margin-right:-24px}.love-story h2{font-size:27px}}
