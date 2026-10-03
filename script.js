@@ -225,12 +225,16 @@ if (envelopeIntro && openInvitation) {
     envelopeIntro.classList.add('envelope-opening');
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     window.setTimeout(() => {
-      envelopeIntro.classList.add('envelope-revealed');
-      document.body.classList.remove('invitation-closed');
-      invitationContents.forEach(element => { element.inert = false; });
       document.querySelector('#home').scrollIntoView({ behavior: 'instant' });
-      document.querySelector('#open-menu').focus({ preventScroll: true });
-      window.setTimeout(() => { envelopeIntro.hidden = true; }, reducedMotion ? 0 : 600);
-    }, reducedMotion ? 0 : 1100);
+      document.body.classList.add('invitation-revealing');
+      document.body.classList.remove('invitation-closed');
+      envelopeIntro.classList.add('envelope-revealed');
+      window.setTimeout(() => {
+        envelopeIntro.hidden = true;
+        invitationContents.forEach(element => { element.inert = false; });
+        document.body.classList.remove('invitation-revealing');
+        document.querySelector('#open-menu').focus({ preventScroll: true });
+      }, reducedMotion ? 0 : 1200);
+    }, reducedMotion ? 0 : 1450);
   }, { once: true });
 }

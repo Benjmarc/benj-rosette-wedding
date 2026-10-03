@@ -241,3 +241,8 @@ body.invitation-closed{overflow:hidden}.envelope-intro{position:fixed;inset:0;z-
 .gentle-reminder{text-align:center;background:var(--paper);padding:44px 24px;color:var(--ink)}.gentle-reminder h2{font:400 26px/1.2 var(--serif);letter-spacing:1px;margin:24px 0}.gentle-reminder p{font:400 20px/1.9 var(--serif);letter-spacing:1px}.gentle-reminder .ornament{margin:0 auto}
 
 .snap-and-share{background:var(--paper)}
+
+/* Slow, continuous paper motion and a soft invitation reveal. */
+.envelope-intro{transition:opacity .95s ease,transform 1.1s cubic-bezier(.22,1,.36,1),visibility .95s;will-change:opacity,transform}.envelope-flap{transition:transform .9s cubic-bezier(.4,0,.2,1),z-index 0s .45s}.envelope-letter{transition:transform 1.1s .35s cubic-bezier(.22,1,.36,1)}.envelope-seal{transition:opacity .35s ease,transform .5s ease}.envelope-opening .envelope-seal{transform:translate(-50%,-50%) scale(.92)}.envelope-action{transition:opacity .35s ease}.envelope-revealed{transform:translateY(-20px) scale(1.015)}
+body.invitation-closed .invitation-panels{opacity:0}body.invitation-revealing .invitation-panels{animation:invitation-arrives 1.2s cubic-bezier(.22,1,.36,1) both}@keyframes invitation-arrives{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+@media(prefers-reduced-motion:reduce){.envelope-intro,.envelope-flap,.envelope-letter,.envelope-seal,.envelope-action{transition:none}.envelope-revealed{transform:none}body.invitation-revealing .invitation-panels{animation:none}}
