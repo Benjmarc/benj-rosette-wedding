@@ -168,3 +168,27 @@ window.addEventListener('pagehide', () => clearInterval(countdownInterval), { on
 const rsvpDialog = document.querySelector('#rsvp-dialog');
 document.querySelector('#open-rsvp').addEventListener('click', () => rsvpDialog.showModal());
 document.querySelector('#close-rsvp').addEventListener('click', () => rsvpDialog.close());
+
+const weddingMusic = document.querySelector('#wedding-music');
+const musicToggle = document.querySelector('#music-toggle');
+const musicLabel = document.querySelector('#music-label');
+const musicStatus = document.querySelector('#music-status');
+weddingMusic.volume = 0.5;
+function updateMusicControl() {
+  const playing = !weddingMusic.paused;
+  musicToggle.setAttribute('aria-pressed', String(playing));
+  musicToggle.setAttribute('aria-label', playing ? 'Pause wedding music' : 'Play wedding music');
+  musicLabel.textContent = playing ? 'Pause music' : 'Play music';
+}
+musicToggle.addEventListener('click', async () => {
+  musicStatus.hidden = true;
+  if (!weddingMusic.paused) { weddingMusic.pause(); return; }
+  try { await weddingMusic.play(); } catch (_) {
+    musicStatus.textContent = 'Music could not play. Please try again.';
+    musicStatus.hidden = false;
+    updateMusicControl();
+  }
+});
+weddingMusic.addEventListener('play', updateMusicControl);
+weddingMusic.addEventListener('pause', updateMusicControl);
+window.addEventListener('pagehide', () => weddingMusic.pause());
