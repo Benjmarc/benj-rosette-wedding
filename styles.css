@@ -122,3 +122,12 @@ body.menu-is-open{overflow:hidden}
 .entourage-group ul{list-style:none;margin:0;padding:0}
 .entourage-group li{font:17px/1.8 var(--serif);letter-spacing:.35px;overflow-wrap:break-word}
 @media(max-width:380px){.entourage-section{padding-left:20px;padding-right:20px}.entourage-group li{font-size:16px}}
+
+.entourage-section{padding-left:16px;padding-right:16px}
+.entourage-group{max-width:none}
+.paired-group ul{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 14px;text-align:left;align-items:start}
+.paired-group li{font-size:15px;line-height:1.4;letter-spacing:0}
+.entourage-teams{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:40px 0}
+.entourage-teams .entourage-group{margin:0;min-width:0;text-align:left}
+.entourage-teams li{font-size:14px;line-height:1.6;letter-spacing:0;margin-bottom:6px}
+@media(max-width:380px){.paired-group li{font-size:14px}.entourage-teams li{font-size:13px}.paired-group ul,.entourage-teams{column-gap:10px}}
