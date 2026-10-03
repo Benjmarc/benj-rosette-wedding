@@ -224,3 +224,5 @@ body.invitation-closed{overflow:hidden}.envelope-intro{position:fixed;inset:0;z-
 .story-photo .story-floral-top{width:min(36%,260px)}
 .story-photo .story-floral-bottom{width:min(36%,260px)}
 @media(max-width:600px){.portrait-sprig{width:48%;max-width:210px;bottom:-16px}.golden-sprig{width:36%;max-width:170px;top:-25px;right:-8px}.photo-bouquet{width:62%;max-width:290px;bottom:-10px}.story-photo .story-floral-top,.story-photo .story-floral-bottom{width:33%;max-width:160px}}
+
+.opening blockquote{max-width:460px;line-height:1.5;font-size:20px}.opening cite{font-size:16px;margin-top:18px}@media(max-width:600px){.opening blockquote{max-width:340px;font-size:18px}.opening cite{font-size:15px}}
