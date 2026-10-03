@@ -75,3 +75,10 @@ body{background:var(--paper)}
 .story-photo img{display:block;width:100%;height:auto}
 .love-story>.story-closing{font-style:italic;color:var(--rust)}
 @media(max-width:380px){.love-story{padding-left:24px;padding-right:24px}.story-photo{margin-left:-24px;margin-right:-24px}.love-story h2{font-size:27px}}
+
+.story-photo{position:relative;overflow:visible;margin-top:42px;margin-bottom:42px}
+.story-photo .story-portrait{display:block;width:100%;height:auto}
+.story-photo .story-floral{position:absolute;z-index:1;height:auto;pointer-events:none}
+.story-photo .story-floral-top{width:43%;top:-22px;left:-8px}
+.story-photo .story-floral-bottom{width:42%;bottom:-18px;right:-10px;transform:rotate(-10deg)}
+.love-story{overflow:hidden}
