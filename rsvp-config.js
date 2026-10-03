@@ -1,2 +1,2 @@
-// Paste the deployed Google Apps Script web-app URL here after authorization.
-window.WEDDING_RSVP = { endpoint: '' };
+// Public RSVP web app: saves replies and sends ceremony calendar invitations.
+window.WEDDING_RSVP = { endpoint: 'https://script.google.com/macros/s/AKfycbzGFRDf9dnd-f6xEYIvgCLoCU2qx51mTcJrIeK3Wy4AC_ikvwwOfHoEvT2ZUTf9xknu/exec' };
