@@ -226,3 +226,10 @@ body.invitation-closed{overflow:hidden}.envelope-intro{position:fixed;inset:0;z-
 @media(max-width:600px){.portrait-sprig{width:48%;max-width:210px;bottom:-16px}.golden-sprig{width:36%;max-width:170px;top:-25px;right:-8px}.photo-bouquet{width:62%;max-width:290px;bottom:-10px}.story-photo .story-floral-top,.story-photo .story-floral-bottom{width:33%;max-width:160px}}
 
 .opening blockquote{max-width:460px;line-height:1.5;font-size:20px}.opening cite{font-size:16px;margin-top:18px}@media(max-width:600px){.opening blockquote{max-width:340px;font-size:18px}.opening cite{font-size:15px}}
+
+/* Center the opening invitation as one balanced group. */
+.opening{min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:64px 24px;text-align:center}
+.opening blockquote{width:100%;margin:0 auto}
+.opening .monogram{width:100%;margin:28px 0 18px}
+.opening>.small-caps{margin:0 auto}
+@media(max-width:600px){.opening{padding:64px 24px}.opening .corner-floral{width:min(48%,190px)}.opening .monogram{margin:24px 0 18px}}
