@@ -96,3 +96,6 @@ body{background:var(--paper)}
 .signature{font-family:'Great Vibes','Italianno',cursive!important;font-size:46px!important;line-height:1.35!important}
 .thank-you>.signature{font-size:60px!important;line-height:1.3!important}
 @media(max-width:380px){.signature{font-size:40px!important}.thank-you>.signature{font-size:54px!important}}
+
+/* Crop the roof strip above the umbrella portrait beneath the florals. */
+.golden-photo img{height:115%;top:-15%;object-position:82% bottom}
