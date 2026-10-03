@@ -214,3 +214,23 @@ weddingMenu.addEventListener('close', () => {
   menuToggle.setAttribute('aria-expanded', 'false');
   document.body.classList.remove('menu-is-open');
 });
+
+const envelopeIntro = document.querySelector('#envelope-intro');
+const openInvitation = document.querySelector('#open-invitation');
+if (envelopeIntro && openInvitation) {
+  const invitationContents = [...document.body.children].filter(element => element !== envelopeIntro && !['SCRIPT', 'NOSCRIPT'].includes(element.tagName));
+  invitationContents.forEach(element => { element.inert = true; });
+  openInvitation.addEventListener('click', () => {
+    openInvitation.disabled = true;
+    envelopeIntro.classList.add('envelope-opening');
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    window.setTimeout(() => {
+      envelopeIntro.classList.add('envelope-revealed');
+      document.body.classList.remove('invitation-closed');
+      invitationContents.forEach(element => { element.inert = false; });
+      document.querySelector('#home').scrollIntoView({ behavior: 'instant' });
+      document.querySelector('#open-menu').focus({ preventScroll: true });
+      window.setTimeout(() => { envelopeIntro.hidden = true; }, reducedMotion ? 0 : 600);
+    }, reducedMotion ? 0 : 1100);
+  }, { once: true });
+}
