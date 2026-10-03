@@ -187,3 +187,6 @@ html{scroll-padding-top:84px}
 .photo-upload-link{border:0;border-radius:30px;background:var(--rust);color:#fff5e8;padding:9px 22px;box-shadow:0 3px 7px #6d412733;font:16px/1.2 var(--serif);letter-spacing:0;text-transform:none;text-decoration:none}
 .photo-upload-link:hover{background:#82452d;color:#fff5e8}
 @media(max-width:600px){.photo-upload-link{font-size:16px;padding:9px 22px}}
+
+/* Give the primary RSVP action a larger, comfortable target. */
+#open-rsvp{width:100%;max-width:320px;min-height:60px;padding:16px 24px;font-size:24px;line-height:1.2;border-radius:36px}
