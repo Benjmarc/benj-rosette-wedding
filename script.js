@@ -1,6 +1,36 @@
 const form = document.querySelector('#rsvp-form');
 const result = document.querySelector('#form-result');
 const guestDetails = document.querySelector('#guest-details');
+const additionalGuests = document.querySelector('#additional-guests');
+const additionalGuestFields = document.querySelector('#additional-guest-fields');
+function updateGuestNames() {
+  const attending = form.elements.attendance.value === 'Joyfully accepts';
+  const count = attending ? Number(form.elements.guests.value) - 1 : 0;
+  const previous = [...additionalGuestFields.querySelectorAll('input')].map(input => input.value);
+  additionalGuestFields.replaceChildren();
+  additionalGuests.hidden = count === 0;
+  for (let index = 0; index < count; index++) {
+    const label = document.createElement('label');
+    label.textContent = `Guest ${index + 2} full name`;
+    const input = document.createElement('input');
+    input.name = `companion${index + 2}`;
+    input.placeholder = 'First and last name';
+    input.required = true;
+    input.maxLength = 80;
+    input.value = previous[index] || '';
+    label.append(input);
+    additionalGuestFields.append(label);
+  }
+}
+// Include companion names in the existing message column so the deployed
+// Apps Script can record them without requiring a new deployment.
+form.addEventListener('formdata', event => {
+  const names = [...additionalGuestFields.querySelectorAll('input')].map(input => input.value.trim());
+  if (names.length) {
+    const note = event.formData.get('message') || '';
+    event.formData.set('message', `Accompanying guests:\n${names.map((name, index) => `Guest ${index + 2}: ${name}`).join('\n')}\n\nNote: ${note}`);
+  }
+});
 let currentReply = null;
 const rsvpEndpoint = window.WEDDING_RSVP?.endpoint || '';
 const onlineRsvp = /^https:\/\/script\.google\.com\/macros\/s\/[A-Za-z0-9_-]+\/exec$/.test(rsvpEndpoint);
@@ -17,13 +47,17 @@ form.addEventListener('reset', () => {
   guestDetails.hidden = false;
   form.elements.guests.disabled = false;
   form.elements.dietary.disabled = false;
+  additionalGuestFields.replaceChildren();
+  additionalGuests.hidden = true;
+  setTimeout(updateGuestNames, 0);
 });
 
-form.addEventListener('change', () => {
+form.addEventListener('change', (event) => {
   const attending = form.elements.attendance.value === 'Joyfully accepts';
   guestDetails.hidden = !attending;
   form.elements.guests.disabled = !attending;
   form.elements.dietary.disabled = !attending;
+  if (event.target === form || event.target === form.elements.guests || event.target?.name === 'attendance') updateGuestNames();
 });
 
 form.addEventListener('submit', (event) => {
