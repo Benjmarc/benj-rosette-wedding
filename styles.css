@@ -85,3 +85,10 @@ body{background:var(--paper)}
 
 /* Warm brown monogram to match the invitation ink and dried florals. */
 .monogram img{filter:grayscale(1) brightness(.48) sepia(.65)}
+
+.name-section h1{font-family:'Great Vibes','Italianno',cursive;font-weight:400;font-size:76px;line-height:1.18}
+.name-section h1 i{font-family:'Great Vibes','Italianno',cursive;font-size:38px;line-height:1.2;margin:6px 0 10px;color:var(--rust)}
+.name-section{min-height:350px;padding-top:22px;padding-bottom:22px}
+@media(min-width:1100px){.name-section h1{font-size:84px}.name-section{min-height:390px}}
+@media(max-width:900px){.name-section h1{font-size:84px}.name-section{min-height:390px}}
+@media(max-width:380px){.name-section h1{font-size:68px}.name-section{min-height:350px}}
