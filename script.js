@@ -82,7 +82,7 @@ form.addEventListener('submit', (event) => {
 
 document.querySelector('#download-rsvp').addEventListener('click', () => {
   if (!currentReply) return;
-  const reply = `RSVP — Benj & Rosette\nDecember 15, 2026 · 2:00 PM\nCeremony: Saint Joseph the Worker Chapel, Pedro Reyes St., Imus, 4103 Cavite\nReception: Priscilla Crystal Palace, CV6R+JP6, Kawit, 4104 Cavite (following the ceremony)\n\nName: ${currentReply.name}\nEmail: ${currentReply.email}\nResponse: ${currentReply.attendance}\nGuests: ${currentReply.guests}\nDietary requirements: ${currentReply.dietary || 'None'}\n\nA note for the couple:\n${currentReply.message || 'With love!'}\n`;
+  const reply = `RSVP — Benj & Rosette\nDecember 15, 2026 · 2:00 PM\nCeremony: Saint Joseph The Worker Chapel, Pedro Reyes St., Malagasang 1-G, Imus City, Cavite\nReception: Priscilla Crystal Palace, San Sebastian, Kawit, Cavite (4:00 PM)\n\nName: ${currentReply.name}\nEmail: ${currentReply.email}\nResponse: ${currentReply.attendance}\nGuests: ${currentReply.guests}\nDietary requirements: ${currentReply.dietary || 'None'}\n\nA note for the couple:\n${currentReply.message || 'With love!'}\n`;
   const url = URL.createObjectURL(new Blob([reply], { type: 'text/plain;charset=utf-8' }));
   const link = document.createElement('a');
   link.href = url;
