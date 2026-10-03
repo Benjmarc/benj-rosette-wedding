@@ -235,3 +235,5 @@ body.invitation-closed{overflow:hidden}.envelope-intro{position:fixed;inset:0;z-
 @media(max-width:600px){.opening{padding:64px 24px}.opening .corner-floral{width:min(48%,190px)}.opening .monogram{margin:24px 0 18px}}
 
 .gift-photo-wrap{position:relative;margin:45px 0 55px;padding:0;width:100%;isolation:isolate}.gift-portrait{width:100%;height:clamp(580px,75vw,850px);object-fit:cover;object-position:center 65%}.gift-photo-floral{position:absolute;height:auto;pointer-events:none;z-index:1}.gift-photo-floral-top{width:min(27%,280px);top:-20px;left:-10px}.gift-photo-floral-bottom{width:min(40%,400px);bottom:-20px;right:-10px}@media(max-width:600px){.gift-portrait{height:auto;aspect-ratio:2661/3984;object-fit:contain}.gift-photo-floral-top{width:33%;max-width:150px;top:-15px}.gift-photo-floral-bottom{width:50%;max-width:230px;bottom:-16px}}
+
+.bottom-bouquet{display:block;width:min(100%,460px);max-height:none;height:auto;object-fit:contain;margin:12px auto -14px}.portrait-wrap{background:var(--paper)}@media(max-width:600px){.bottom-bouquet{width:min(100%,360px);margin-top:6px}}
