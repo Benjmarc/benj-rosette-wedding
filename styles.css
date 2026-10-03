@@ -63,3 +63,6 @@ body{background:var(--paper)}
 .music-toggle:focus-visible{outline:3px solid var(--rust);outline-offset:4px}
 .music-status{position:fixed;right:18px;bottom:80px;max-width:250px;z-index:20;background:var(--paper);padding:12px;border:1px solid var(--line);font:14px var(--serif)}
 @media(max-width:600px){.music-toggle{right:12px;padding:9px 14px;font-size:13px}}
+
+.monogram img{display:block;width:230px;max-width:85%;height:auto;object-fit:contain}
+@media(max-width:380px){.monogram img{width:205px}}
