@@ -114,3 +114,11 @@ body{background:var(--paper)}
 body.menu-is-open{overflow:hidden}
 @media(max-width:600px){.menu-toggle{top:max(12px,env(safe-area-inset-top));right:12px;padding:10px 13px;font-size:12px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+.entourage-section{padding:48px 24px 12px;text-align:center}
+.entourage-section>h2{font-size:28px;letter-spacing:2px}
+.entourage-group{margin:30px auto;max-width:340px}
+.entourage-group h3{font:11px/1.6 var(--sans);letter-spacing:1.6px;text-transform:uppercase;color:var(--rust);margin-bottom:12px}
+.entourage-group ul{list-style:none;margin:0;padding:0}
+.entourage-group li{font:17px/1.8 var(--serif);letter-spacing:.35px;overflow-wrap:break-word}
+@media(max-width:380px){.entourage-section{padding-left:20px;padding-right:20px}.entourage-group li{font-size:16px}}
