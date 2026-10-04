@@ -251,16 +251,17 @@ weddingMenu.addEventListener('close', () => {
 
 const envelopeIntro = document.querySelector('#envelope-intro');
 const openInvitation = document.querySelector('#open-invitation');
-function startPhotoAnimations() {
+function startInvitationAnimations() {
   const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
   if (motionPreference.matches || !('IntersectionObserver' in window)) return;
   const photos = [...document.querySelectorAll('.couple-photo, .story-photo, .gift-photo-wrap')];
+  const text = [...document.querySelectorAll('.opening blockquote, .opening > .small-caps, .love-story > p, .love-story > h2, .family-section > p, .name-section > p, .name-section > h1, .invitation-message, .wedding-date, .countdown-section > h2, .countdown')];
   const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (!entry.isIntersecting) return;
       const photo = entry.target;
       const image = photo.querySelector('img');
-      const reveal = () => photo.classList.add('photo-in-view');
+      const reveal = () => photo.classList.add(photo.classList.contains('text-motion-ready') ? 'text-in-view' : 'photo-in-view');
       if (!image || image.complete) reveal();
       else {
         image.addEventListener('load', reveal, { once: true });
@@ -273,10 +274,16 @@ function startPhotoAnimations() {
     photo.classList.add('photo-motion-ready');
     observer.observe(photo);
   });
+  text.forEach((element, index) => {
+    element.style.setProperty('--text-reveal-delay', `${index % 3 * 110}ms`);
+    element.classList.add('text-motion-ready');
+    observer.observe(element);
+  });
   motionPreference.addEventListener('change', event => {
     if (!event.matches) return;
     observer.disconnect();
     photos.forEach(photo => photo.classList.remove('photo-motion-ready', 'photo-in-view'));
+    text.forEach(element => element.classList.remove('text-motion-ready', 'text-in-view'));
   }, { once: true });
 }
 if (envelopeIntro && openInvitation) {
@@ -290,6 +297,7 @@ if (envelopeIntro && openInvitation) {
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     window.setTimeout(() => {
       document.querySelector('#home').scrollIntoView({ behavior: 'instant' });
+      startInvitationAnimations();
       document.body.classList.add('invitation-revealing');
       document.body.classList.remove('invitation-closed');
       envelopeIntro.classList.add('envelope-revealed');
@@ -297,9 +305,8 @@ if (envelopeIntro && openInvitation) {
         envelopeIntro.hidden = true;
         invitationContents.forEach(element => { element.inert = false; });
         document.body.classList.remove('invitation-revealing');
-        startPhotoAnimations();
         document.querySelector('#open-menu').focus({ preventScroll: true });
       }, reducedMotion ? 0 : 1200);
     }, reducedMotion ? 0 : 1450);
   }, { once: true });
-} else startPhotoAnimations();
+} else startInvitationAnimations();
