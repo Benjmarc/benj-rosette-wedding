@@ -174,27 +174,57 @@ const musicToggle = document.querySelector('#music-toggle');
 const musicLabel = document.querySelector('#music-label');
 const musicStatus = document.querySelector('#music-status');
 weddingMusic.volume = 0.5;
+let musicPlaying = false;
 function updateMusicControl() {
-  const playing = !weddingMusic.paused;
+  const playing = musicPlaying && !weddingMusic.paused;
+  const requested = !weddingMusic.paused && !weddingMusic.error;
   musicToggle.setAttribute('aria-pressed', String(playing));
-  musicToggle.setAttribute('aria-label', playing ? 'Pause wedding music' : 'Play wedding music');
-  musicLabel.textContent = playing ? 'Pause music' : 'Play music';
+  musicToggle.setAttribute('aria-label', requested ? 'Pause wedding music' : 'Play wedding music');
+  musicLabel.textContent = requested ? (playing ? 'Pause music' : 'Loading music…') : 'Play music';
 }
 async function playWeddingMusic() {
   musicStatus.hidden = true;
-  try { await weddingMusic.play(); } catch (_) {
-    musicStatus.textContent = 'Music could not play. Please try again.';
+  weddingMusic.muted = false;
+  // Some mobile browsers expose an explicit music playback audio session.
+  try { if (navigator.audioSession) navigator.audioSession.type = 'playback'; } catch (_) {}
+  if (weddingMusic.error) weddingMusic.load();
+  try { await weddingMusic.play(); } catch (error) {
+    if (error.name === 'AbortError' && weddingMusic.paused) return;
+    musicPlaying = false;
+    musicStatus.textContent = error.name === 'NotAllowedError'
+      ? 'Tap ♫ to start the music.'
+      : 'Music could not load. Tap ♫ to try again.';
     musicStatus.hidden = false;
     updateMusicControl();
   }
 }
 musicToggle.addEventListener('click', () => {
   musicStatus.hidden = true;
-  if (!weddingMusic.paused) { weddingMusic.pause(); return; }
+  if (!weddingMusic.paused && !weddingMusic.error) { weddingMusic.pause(); return; }
   playWeddingMusic();
 });
-weddingMusic.addEventListener('play', updateMusicControl);
-weddingMusic.addEventListener('pause', updateMusicControl);
+weddingMusic.addEventListener('playing', () => {
+  musicPlaying = true;
+  musicStatus.hidden = true;
+  updateMusicControl();
+});
+weddingMusic.addEventListener('waiting', () => {
+  musicPlaying = false;
+  musicStatus.textContent = 'Loading music…';
+  musicStatus.hidden = false;
+  updateMusicControl();
+});
+weddingMusic.addEventListener('pause', () => {
+  musicPlaying = false;
+  musicStatus.hidden = true;
+  updateMusicControl();
+});
+weddingMusic.addEventListener('error', () => {
+  musicPlaying = false;
+  musicStatus.textContent = 'Music could not load. Tap ♫ to try again.';
+  musicStatus.hidden = false;
+  updateMusicControl();
+});
 window.addEventListener('pagehide', () => weddingMusic.pause());
 
 const weddingMenu = document.querySelector('#wedding-menu');
@@ -222,7 +252,7 @@ weddingMenu.addEventListener('close', () => {
 const envelopeIntro = document.querySelector('#envelope-intro');
 const openInvitation = document.querySelector('#open-invitation');
 if (envelopeIntro && openInvitation) {
-  const invitationContents = [...document.body.children].filter(element => element !== envelopeIntro && !['SCRIPT', 'NOSCRIPT'].includes(element.tagName));
+  const invitationContents = [...document.body.children].filter(element => element !== envelopeIntro && !['SCRIPT', 'NOSCRIPT', 'AUDIO'].includes(element.tagName));
   invitationContents.forEach(element => { element.inert = true; });
   openInvitation.addEventListener('click', () => {
     openInvitation.disabled = true;
