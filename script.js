@@ -251,6 +251,34 @@ weddingMenu.addEventListener('close', () => {
 
 const envelopeIntro = document.querySelector('#envelope-intro');
 const openInvitation = document.querySelector('#open-invitation');
+function startPhotoAnimations() {
+  const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
+  if (motionPreference.matches || !('IntersectionObserver' in window)) return;
+  const photos = [...document.querySelectorAll('.couple-photo, .story-photo, .gift-photo-wrap')];
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      const photo = entry.target;
+      const image = photo.querySelector('img');
+      const reveal = () => photo.classList.add('photo-in-view');
+      if (!image || image.complete) reveal();
+      else {
+        image.addEventListener('load', reveal, { once: true });
+        image.addEventListener('error', reveal, { once: true });
+      }
+      observer.unobserve(photo);
+    });
+  }, { threshold: 0.08 });
+  photos.forEach(photo => {
+    photo.classList.add('photo-motion-ready');
+    observer.observe(photo);
+  });
+  motionPreference.addEventListener('change', event => {
+    if (!event.matches) return;
+    observer.disconnect();
+    photos.forEach(photo => photo.classList.remove('photo-motion-ready', 'photo-in-view'));
+  }, { once: true });
+}
 if (envelopeIntro && openInvitation) {
   const invitationContents = [...document.body.children].filter(element => element !== envelopeIntro && !['SCRIPT', 'NOSCRIPT', 'AUDIO'].includes(element.tagName));
   invitationContents.forEach(element => { element.inert = true; });
@@ -269,8 +297,9 @@ if (envelopeIntro && openInvitation) {
         envelopeIntro.hidden = true;
         invitationContents.forEach(element => { element.inert = false; });
         document.body.classList.remove('invitation-revealing');
+        startPhotoAnimations();
         document.querySelector('#open-menu').focus({ preventScroll: true });
       }, reducedMotion ? 0 : 1200);
     }, reducedMotion ? 0 : 1450);
   }, { once: true });
-}
+} else startPhotoAnimations();
