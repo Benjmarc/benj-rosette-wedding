@@ -255,7 +255,19 @@ function startInvitationAnimations() {
   const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
   if (motionPreference.matches || !('IntersectionObserver' in window)) return;
   const photos = [...document.querySelectorAll('.couple-photo, .story-photo, .gift-photo-wrap')];
-  const text = [...document.querySelectorAll('.opening blockquote, .opening > .small-caps, .love-story > p, .love-story > h2, .family-section > p, .name-section > p, .name-section > h1, .invitation-message, .wedding-date, .countdown-section > h2, .countdown')];
+  const textSelectors = [
+    '.opening blockquote', '.opening > .small-caps', '.love-story > p', '.love-story > h2',
+    '.family-section > p', '.name-section > p', '.name-section > h1', '.invitation-message',
+    '.wedding-date', '.countdown-section > h2', '.countdown',
+    '.event > h2', '.event > h3', '.event > p', '.itinerary > h2', '.itinerary li', '.timing-note',
+    '.entourage-section h2', '.entourage-section h3', '.entourage-section li',
+    '.dress-section h2', '.dress-section h3', '.dress-section p', '.dress-palette li',
+    '.gift-section > h2', '.gift-section > h3', '.gift-section > p',
+    '.bank-qr-card h4', '.bank-qr-card figcaption', '.attendance-section > h2', '.attendance-section > p',
+    '.thank-you > p', '.gentle-reminder > h2', '.gentle-reminder > p',
+    '.wedding-faqs h2', '.faq-item h3', '.faq-item p', '.snap-and-share > h2', '.snap-and-share > p'
+  ];
+  const text = [...document.querySelectorAll(textSelectors.join(', '))];
   const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (!entry.isIntersecting) return;
