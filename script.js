@@ -180,14 +180,18 @@ function updateMusicControl() {
   musicToggle.setAttribute('aria-label', playing ? 'Pause wedding music' : 'Play wedding music');
   musicLabel.textContent = playing ? 'Pause music' : 'Play music';
 }
-musicToggle.addEventListener('click', async () => {
+async function playWeddingMusic() {
   musicStatus.hidden = true;
-  if (!weddingMusic.paused) { weddingMusic.pause(); return; }
   try { await weddingMusic.play(); } catch (_) {
     musicStatus.textContent = 'Music could not play. Please try again.';
     musicStatus.hidden = false;
     updateMusicControl();
   }
+}
+musicToggle.addEventListener('click', () => {
+  musicStatus.hidden = true;
+  if (!weddingMusic.paused) { weddingMusic.pause(); return; }
+  playWeddingMusic();
 });
 weddingMusic.addEventListener('play', updateMusicControl);
 weddingMusic.addEventListener('pause', updateMusicControl);
@@ -222,6 +226,8 @@ if (envelopeIntro && openInvitation) {
   invitationContents.forEach(element => { element.inert = true; });
   openInvitation.addEventListener('click', () => {
     openInvitation.disabled = true;
+    // Start during the guest's click, before animation timers lose user activation.
+    playWeddingMusic();
     envelopeIntro.classList.add('envelope-opening');
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     window.setTimeout(() => {
