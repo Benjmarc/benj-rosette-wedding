@@ -37,7 +37,7 @@ const onlineRsvp = /^https:\/\/script\.google\.com\/macros\/s\/[A-Za-z0-9_-]+\/e
 if (onlineRsvp) {
   form.action = rsvpEndpoint;
   form.querySelector('[type="submit"]').textContent = 'Confirm my attendance ↗';
-  document.querySelector('#rsvp-delivery-note').textContent = 'Your reply will be saved to the couple’s RSVP list. If attending, a calendar invitation will be emailed to you. Google opens a new tab with the result.';
+  document.querySelector('#rsvp-delivery-note').textContent = 'Your reply will be saved to the couple’s RSVP list. If attending and you provide an email, a calendar invitation will be emailed to you. Google opens a new tab with the result.';
 }
 
 form.addEventListener('reset', () => {
@@ -120,7 +120,7 @@ if (document.modelContext?.registerTool) {
           dietary: { type: 'string', maxLength: 300 },
           message: { type: 'string', maxLength: 1000 }
         },
-        required: ['name', 'email', 'attendance'],
+        required: ['name', 'attendance'],
         additionalProperties: false
       },
       annotations: { readOnlyHint: false, untrustedContentHint: true },
@@ -129,7 +129,7 @@ if (document.modelContext?.registerTool) {
         if (!input || typeof input !== 'object') throw new Error('An RSVP reply is required.');
         if (typeof input.name !== 'string' || !input.name.trim() || input.name.length > 100) throw new Error('Please provide your full name.');
         const emailCheck = document.createElement('input');
-        emailCheck.type = 'email'; emailCheck.required = true;
+        emailCheck.type = 'email';
         emailCheck.value = typeof input.email === 'string' ? input.email : '';
         if (!emailCheck.checkValidity()) throw new Error('Please provide a valid email address.');
         if (!['Joyfully accepts', 'Regretfully declines'].includes(input.attendance)) throw new Error('Please choose an attendance response.');
