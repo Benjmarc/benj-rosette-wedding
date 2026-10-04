@@ -301,24 +301,49 @@ function startInvitationAnimations() {
 if (envelopeIntro && openInvitation) {
   const invitationContents = [...document.body.children].filter(element => element !== envelopeIntro && !['SCRIPT', 'NOSCRIPT', 'AUDIO'].includes(element.tagName));
   invitationContents.forEach(element => { element.inert = true; });
+  function afterEnvelopeTransition(element, property, fallbackMs, complete) {
+    let finished = false;
+    const finish = () => {
+      if (finished) return;
+      finished = true;
+      window.clearTimeout(fallback);
+      element.removeEventListener('transitionend', onEnd);
+      element.removeEventListener('transitioncancel', onEnd);
+      complete();
+    };
+    const onEnd = event => {
+      if (event.target === element && event.propertyName === property) finish();
+    };
+    const fallback = window.setTimeout(finish, fallbackMs);
+    element.addEventListener('transitionend', onEnd);
+    element.addEventListener('transitioncancel', onEnd);
+  }
   openInvitation.addEventListener('click', () => {
     openInvitation.disabled = true;
     // Start during the guest's click, before animation timers lose user activation.
     playWeddingMusic();
-    envelopeIntro.classList.add('envelope-opening');
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    window.setTimeout(() => {
+    const finishReveal = () => {
+      envelopeIntro.hidden = true;
+      invitationContents.forEach(element => { element.inert = false; });
+      document.body.classList.remove('invitation-revealing');
+      document.querySelector('#open-menu').focus({ preventScroll: true });
+    };
+    const revealInvitation = () => {
       document.querySelector('#home').scrollIntoView({ behavior: 'instant' });
       startInvitationAnimations();
       document.body.classList.add('invitation-revealing');
       document.body.classList.remove('invitation-closed');
+      if (!reducedMotion) afterEnvelopeTransition(envelopeIntro, 'transform', 1400, finishReveal);
       envelopeIntro.classList.add('envelope-revealed');
-      window.setTimeout(() => {
-        envelopeIntro.hidden = true;
-        invitationContents.forEach(element => { element.inert = false; });
-        document.body.classList.remove('invitation-revealing');
-        document.querySelector('#open-menu').focus({ preventScroll: true });
-      }, reducedMotion ? 0 : 1200);
-    }, reducedMotion ? 0 : 1450);
+      if (reducedMotion) finishReveal();
+    };
+    if (!reducedMotion) {
+      afterEnvelopeTransition(envelopeIntro.querySelector('.envelope-letter'), 'transform', 1800, () => {
+        window.setTimeout(revealInvitation, 200);
+      });
+    }
+    envelopeIntro.classList.add('envelope-opening');
+    if (reducedMotion) revealInvitation();
   }, { once: true });
 } else startInvitationAnimations();
