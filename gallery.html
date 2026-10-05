@@ -33,4 +33,66 @@ body.gallery-page{margin:0;background:#f5efe5;color:#50392d}.gallery-nav{max-wid
 <figure><a href="benj-rosette-gallery-08.jpg" target="_blank" rel="noopener noreferrer" aria-label="View full-size photo: Benj in a suit and Rosette in a white dress seated by an arched window"><img src="benj-rosette-gallery-08.jpg" alt="Benj in a suit and Rosette in a white dress seated by an arched window" loading="lazy" decoding="async"></a></figure>
 <figure><a href="benj-rosette-gallery-09.jpg" target="_blank" rel="noopener noreferrer" aria-label="View full-size photo: Benj in a suit and Rosette in a white dress looking along the staircase"><img src="benj-rosette-gallery-09.jpg" alt="Benj in a suit and Rosette in a white dress looking along the staircase" loading="lazy" decoding="async"></a></figure></div></main>
 <footer class="gallery-footer"><p class="gallery-signature">With love, Benj &amp; Rosette</p><a href="index.html">Return to our wedding invitation</a></footer>
+<audio id="wedding-music" loop preload="metadata"><source src="your-universe.mp3" type="audio/mpeg"><source src="your-universe.m4a" type="audio/mp4"></audio>
+<button type="button" id="music-toggle" class="music-toggle" aria-label="Play wedding music" aria-pressed="false"><span aria-hidden="true">♫</span> <span id="music-label">Play music</span></button>
+<p id="music-status" class="music-status" role="status" hidden></p>
+<script>
+const weddingMusic = document.querySelector('#wedding-music');
+const musicToggle = document.querySelector('#music-toggle');
+const musicLabel = document.querySelector('#music-label');
+const musicStatus = document.querySelector('#music-status');
+weddingMusic.volume = 0.5;
+let musicPlaying = false;
+function updateMusicControl() {
+  const playing = musicPlaying && !weddingMusic.paused;
+  const requested = !weddingMusic.paused && !weddingMusic.error;
+  musicToggle.setAttribute('aria-pressed', String(playing));
+  musicToggle.setAttribute('aria-label', requested ? 'Pause wedding music' : 'Play wedding music');
+  musicLabel.textContent = requested ? (playing ? 'Pause music' : 'Loading music…') : 'Play music';
+}
+async function playWeddingMusic() {
+  musicStatus.hidden = true;
+  weddingMusic.muted = false;
+  // Some mobile browsers expose an explicit music playback audio session.
+  try { if (navigator.audioSession) navigator.audioSession.type = 'playback'; } catch (_) {}
+  if (weddingMusic.error) weddingMusic.load();
+  try { await weddingMusic.play(); } catch (error) {
+    if (error.name === 'AbortError' && weddingMusic.paused) return;
+    musicPlaying = false;
+    musicStatus.textContent = error.name === 'NotAllowedError'
+      ? 'Tap ♫ to start the music.'
+      : 'Music could not load. Tap ♫ to try again.';
+    musicStatus.hidden = false;
+    updateMusicControl();
+  }
+}
+musicToggle.addEventListener('click', () => {
+  musicStatus.hidden = true;
+  if (!weddingMusic.paused && !weddingMusic.error) { weddingMusic.pause(); return; }
+  playWeddingMusic();
+});
+weddingMusic.addEventListener('playing', () => {
+  musicPlaying = true;
+  musicStatus.hidden = true;
+  updateMusicControl();
+});
+weddingMusic.addEventListener('waiting', () => {
+  musicPlaying = false;
+  musicStatus.textContent = 'Loading music…';
+  musicStatus.hidden = false;
+  updateMusicControl();
+});
+weddingMusic.addEventListener('pause', () => {
+  musicPlaying = false;
+  musicStatus.hidden = true;
+  updateMusicControl();
+});
+weddingMusic.addEventListener('error', () => {
+  musicPlaying = false;
+  musicStatus.textContent = 'Music could not load. Tap ♫ to try again.';
+  musicStatus.hidden = false;
+  updateMusicControl();
+});
+window.addEventListener('pagehide', () => weddingMusic.pause());
+</script>
 </body></html>
