@@ -11,10 +11,17 @@
   <link rel="stylesheet" href="styles.css?v=envelope-flow-9">
 <style>
 body.gallery-page{margin:0;background:#f5efe5;color:#50392d}.gallery-nav{max-width:1200px;margin:auto;padding:28px 24px;display:flex;align-items:center;justify-content:space-between;gap:20px;border-bottom:1px solid #50392d22}.gallery-nav a{color:inherit;text-decoration:none;font:14px/1.5 'DM Sans',sans-serif}.gallery-nav .gallery-brand{font:32px/1 'Italianno',cursive}.gallery-main{max-width:1200px;margin:auto;padding:0 24px 60px}.gallery-header{text-align:center;padding:50px 16px 38px;position:relative}.gallery-header h1{font:72px/1.1 'Italianno',cursive;margin:14px 0}.gallery-header p{font:20px/1.5 'Cormorant Garamond',serif;margin:10px auto;max-width:460px}.gallery-eyebrow{font:12px/1.4 'DM Sans',sans-serif!important;letter-spacing:3px;text-transform:uppercase}.gallery-sprig{width:130px;margin:auto}.gallery-grid{columns:3;column-gap:22px}.gallery-grid figure{break-inside:avoid;margin:0 0 22px;padding:10px;background:#fffaf1;box-shadow:0 3px 16px #50392d14}.gallery-grid a{display:block}.gallery-grid img{display:block;width:100%;height:auto}.gallery-grid a:focus-visible,.gallery-nav a:focus-visible{outline:3px solid #a85a38;outline-offset:4px}.gallery-footer{text-align:center;font:20px/1.5 'Cormorant Garamond',serif;padding:24px}.gallery-footer a{color:inherit}.gallery-footer .gallery-signature{font:46px/1.2 'Italianno',cursive;margin:0 0 8px}@media(max-width:900px){.gallery-grid{columns:2}}@media(max-width:550px){.gallery-nav{padding:22px 18px}.gallery-main{padding:0 16px 36px}.gallery-header{padding:32px 0}.gallery-header h1{font-size:60px}.gallery-grid{columns:1}.gallery-grid figure{margin-bottom:18px}}
+.gallery-nav .menu-toggle{position:static;box-shadow:none}.gallery-nav .menu-toggle:focus-visible{outline:3px solid #a85a38;outline-offset:4px}
 </style>
 </head>
 <body class="gallery-page">
-<nav class="gallery-nav" aria-label="Gallery navigation"><a class="gallery-brand" href="index.html">Benj &amp; Rosette</a><a href="index.html">← Back to invitation</a></nav>
+<nav class="gallery-nav" aria-label="Gallery navigation"><a class="gallery-brand" href="index.html">Benj &amp; Rosette</a><button type="button" class="menu-toggle" id="open-menu" aria-label="Open wedding menu" aria-controls="wedding-menu" aria-expanded="false"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg><span>Menu</span></button></nav>
+<dialog id="wedding-menu" class="wedding-menu" aria-labelledby="menu-title">
+ <button type="button" id="close-menu" class="menu-close" aria-label="Close wedding menu">×</button>
+ <p class="menu-names">Benj &amp; Rosette</p><p class="small-caps">December 15, 2026</p>
+ <div class="ornament" aria-hidden="true"></div><h2 id="menu-title">Explore our wedding</h2>
+ <nav aria-label="Wedding sections"><a href="index.html#home">Home</a><a href="index.html#our-story">Our Love Story</a><a href="gallery.html" aria-current="page">Gallery</a><a href="index.html#celebration">Our Wedding Day</a><a href="index.html#ceremony">Ceremony &amp; Reception</a><a href="index.html#order-of-events">Order of Events</a><a href="index.html#entourage">The Entourage</a><a href="index.html#dress-code">Dress Code</a><a href="index.html#gifts">Gift Suggestion</a><a href="index.html#rsvp">RSVP &amp; Contacts</a><a href="index.html#faqs">FAQs</a><a href="index.html#snap-and-share">Snap and Share</a></nav>
+</dialog>
 <main class="gallery-main" id="main"><header class="gallery-header"><img class="gallery-sprig" src="diagonal-sprig.png" alt=""><p class="gallery-eyebrow">Our moments together</p><h1>Benj &amp; Rosette</h1><p>A little collection of love, laughter,<br>and the life we’re building together.</p></header>
 <div class="gallery-grid" aria-label="Benj and Rosette photo gallery"><figure><a href="benj-rosette-first.jpg" target="_blank" rel="noopener noreferrer" aria-label="View full-size photo: Benj and Rosette embracing in front of an arched window"><img src="benj-rosette-first.jpg" alt="Benj and Rosette embracing in front of an arched window" loading="eager" decoding="async"></a></figure>
 <figure><a href="benj-rosette-second.jpg" target="_blank" rel="noopener noreferrer" aria-label="View full-size photo: Benj embracing Rosette as she holds her bouquet"><img src="benj-rosette-second.jpg" alt="Benj embracing Rosette as she holds her bouquet" loading="lazy" decoding="async"></a></figure>
@@ -22,5 +29,24 @@ body.gallery-page{margin:0;background:#f5efe5;color:#50392d}.gallery-nav{max-wid
 <figure><a href="benj-rosette-third.jpg" target="_blank" rel="noopener noreferrer" aria-label="View full-size photo: Benj and Rosette holding hands under clear umbrellas"><img src="benj-rosette-third.jpg" alt="Benj and Rosette holding hands under clear umbrellas" loading="lazy" decoding="async"></a></figure>
 <figure><a href="benj-rosette-gift-portrait.jpg" target="_blank" rel="noopener noreferrer" aria-label="View full-size photo: Rosette leaning against Benj by an arched window"><img src="benj-rosette-gift-portrait.jpg" alt="Rosette leaning against Benj by an arched window" loading="lazy" decoding="async"></a></figure>
 <figure><a href="benj-rosette-fourth.jpg" target="_blank" rel="noopener noreferrer" aria-label="View full-size photo: Benj and Rosette embracing under an umbrella"><img src="benj-rosette-fourth.jpg" alt="Benj and Rosette embracing under an umbrella" loading="lazy" decoding="async"></a></figure></div></main>
-<footer class="gallery-footer"><p class="gallery-signature">With love, Benj &amp; Rosette</p><a href="index.html">Return to our wedding invitation</a></footer>
+<footer class="gallery-footer"><p class="gallery-signature">With love, Benj &amp; Rosette</p></footer>
+<script>
+const galleryMenu = document.querySelector('#wedding-menu');
+const galleryMenuButton = document.querySelector('#open-menu');
+galleryMenuButton.addEventListener('click', () => {
+  galleryMenu.showModal();
+  galleryMenuButton.setAttribute('aria-expanded', 'true');
+  document.body.classList.add('menu-is-open');
+});
+document.querySelector('#close-menu').addEventListener('click', () => galleryMenu.close());
+galleryMenu.querySelectorAll('nav a').forEach(link => link.addEventListener('click', () => galleryMenu.close()));
+galleryMenu.addEventListener('click', event => {
+  const bounds = galleryMenu.getBoundingClientRect();
+  if (event.target === galleryMenu && (event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom)) galleryMenu.close();
+});
+galleryMenu.addEventListener('close', () => {
+  galleryMenuButton.setAttribute('aria-expanded', 'false');
+  document.body.classList.remove('menu-is-open');
+});
+</script>
 </body></html>
