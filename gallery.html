@@ -33,7 +33,7 @@ body.gallery-page{margin:0;background:#f5efe5;color:#50392d}.gallery-nav{max-wid
 
 <figure><a href="benj-rosette-gallery-09.jpg" target="_blank" rel="noopener noreferrer" aria-label="View full-size photo: Benj in a suit and Rosette in a white dress looking along the staircase"><img src="benj-rosette-gallery-09.jpg" alt="Benj in a suit and Rosette in a white dress looking along the staircase" loading="lazy" decoding="async"></a></figure></div></main>
 <footer class="gallery-footer"><p class="gallery-signature">With love, Benj &amp; Rosette</p><a href="index.html">Return to our wedding invitation</a></footer>
-<audio id="wedding-music" loop preload="metadata"><source src="your-universe.mp3" type="audio/mpeg"><source src="your-universe.m4a" type="audio/mp4"></audio>
+<audio id="wedding-music" autoplay loop preload="auto"><source src="your-universe.mp3" type="audio/mpeg"><source src="your-universe.m4a" type="audio/mp4"></audio>
 <button type="button" id="music-toggle" class="music-toggle" aria-label="Play wedding music" aria-pressed="false"><span aria-hidden="true">♫</span> <span id="music-label">Play music</span></button>
 <p id="music-status" class="music-status" role="status" hidden></p>
 <script>
@@ -94,5 +94,19 @@ weddingMusic.addEventListener('error', () => {
   updateMusicControl();
 });
 window.addEventListener('pagehide', () => weddingMusic.pause());
+// Start on arrival; retry on the first gesture when autoplay is blocked.
+playWeddingMusic();
+function startGalleryMusicOnGesture(event) {
+  if (event.target.closest('#music-toggle')) return;
+  if (weddingMusic.paused) playWeddingMusic();
+  document.removeEventListener('pointerdown', startGalleryMusicOnGesture);
+  document.removeEventListener('keydown', startGalleryMusicOnGesture);
+}
+document.addEventListener('pointerdown', startGalleryMusicOnGesture);
+document.addEventListener('keydown', startGalleryMusicOnGesture);
+musicToggle.addEventListener('click', () => {
+  document.removeEventListener('pointerdown', startGalleryMusicOnGesture);
+  document.removeEventListener('keydown', startGalleryMusicOnGesture);
+}, { once: true });
 </script>
 </body></html>
