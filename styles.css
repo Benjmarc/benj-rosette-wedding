@@ -312,3 +312,13 @@ body.invitation-closed .invitation-panels{opacity:0}body.invitation-revealing .i
 .name-section .name-garland{height:185px}
 .invitation-message{padding-top:10px;padding-bottom:14px}
 @media(max-width:900px){.name-section{padding:12px}.name-section .name-garland{height:180px}}
+
+/* Gold architectural illustrations match the printed invitation. */
+.venue-art{display:block;width:100px;height:100px;margin:0 auto 14px;background-image:url("gold-venue-icons.png");background-size:200% 100%;background-repeat:no-repeat}
+.venue-art-church{background-position:left center}
+.venue-art-reception{width:120px;height:120px;background-position:right center;margin-bottom:4px}
+
+/* A single peach rose arrangement sits beneath the couple names. */
+.name-section h1{width:100%;max-width:540px}
+.name-bottom-floral{display:block;width:min(260px,62vw);height:auto;margin:2px auto 4px;pointer-events:none}
+@media(max-width:600px){.name-bottom-floral{width:min(220px,60vw)}}
