@@ -298,3 +298,9 @@ body.invitation-closed .invitation-panels{opacity:0}body.invitation-revealing .i
 .name-section .name-garland{width:128px}
 .name-section .left-garland{left:-30px;transform:translateY(-50%) scaleX(-1)}
 @media(max-width:900px){.name-section .name-garland{width:22%;max-width:110px}.name-section .left-garland{left:0}}
+
+/* Larger opening florals frame the shining gold BR video. */
+.opening .corner-floral{width:min(46vw,480px);max-width:none}
+.opening{padding-top:180px}
+.opening .gold-monogram-video{display:block;width:min(340px,88vw);height:auto;aspect-ratio:1453/1083;object-fit:fill;-webkit-mask:url("benj-rosette-monogram.png") center/100% 100% no-repeat;mask:url("benj-rosette-monogram.png") center/100% 100% no-repeat}
+@media(max-width:600px){.opening .corner-floral{width:min(72vw,300px)}.opening{padding-top:230px;padding-bottom:64px}.opening .monogram{margin:12px 0}.opening .gold-monogram-video{width:min(320px,88vw)}}
