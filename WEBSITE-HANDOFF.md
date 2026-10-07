@@ -163,6 +163,10 @@ Test with a user-authorized email; verify sheet row, receipt, and calendar resul
 
 The previous **Anyone with Google account** restriction prevented guests without a Google login from submitting. With user confirmation, the existing deployment was changed to **Anyone**, keeping **Execute as: Me**, code **Version 5**, and the same `/exec` URL. An unauthenticated no-email test returned **Your attendance is confirmed** and **Your RSVP is saved** without a login redirect. Existing validation and duplicate protection still apply; public access does not guarantee saving invalid submissions or bypass duplicate rules. An additional marked technical test row remains in the sheet. If a phone still fails, retry in its normal browser and capture the exact receipt/error before diagnosing another cause.
 
+### Calendar website link
+
+Apps Script **Version 6**, deployed October 8, 2026 around **4:40 AM Philippine time**, adds `Wedding invitation and details: https://benj-rosette-wedding.online/` to the calendar event description. The existing public endpoint is retained. This applies to newly created calendar invitations; existing events were not edited or resent. Backend tests assert that the description includes the link. No test email was sent for this update.
+
 ## PDF invitation creation
 
 Use **`tmp/pdfs/build_folded_invitation.py`**, not the older builder. It produces two sides of a three-panel roll-fold invitation.
