@@ -32,6 +32,17 @@ form.addEventListener('formdata', event => {
   }
 });
 let currentReply = null;
+function createRsvpRequestId() {
+  // randomUUID is unavailable on HTTP while a custom domain's TLS is pending.
+  // getRandomValues works there too; this ID is for deduplication, not access.
+  if (typeof globalThis.crypto?.randomUUID === 'function') return globalThis.crypto.randomUUID();
+  const bytes = new Uint8Array(16);
+  globalThis.crypto.getRandomValues(bytes);
+  bytes[6] = (bytes[6] & 15) | 64;
+  bytes[8] = (bytes[8] & 63) | 128;
+  const hex = [...bytes].map(value => value.toString(16).padStart(2, '0')).join('');
+  return `${hex.slice(0, 8)}-${hex.slice(8, 12)}-${hex.slice(12, 16)}-${hex.slice(16, 20)}-${hex.slice(20)}`;
+}
 const rsvpEndpoint = window.WEDDING_RSVP?.endpoint || '';
 const onlineRsvp = /^https:\/\/script\.google\.com\/macros\/s\/[A-Za-z0-9_-]+\/exec$/.test(rsvpEndpoint);
 if (onlineRsvp) {
@@ -63,7 +74,16 @@ form.addEventListener('change', (event) => {
 form.addEventListener('submit', (event) => {
   if (!form.reportValidity()) { event.preventDefault(); return; }
   if (onlineRsvp) {
-    form.elements.requestId.value = crypto.randomUUID();
+    try {
+      form.elements.requestId.value = createRsvpRequestId();
+    } catch (_) {
+      event.preventDefault();
+      result.querySelector('strong').textContent = 'Your reply has not been sent';
+      result.querySelector('p').textContent = 'Please reload the invitation in an updated browser and try again, or contact the couple.';
+      document.querySelector('#download-rsvp').hidden = true;
+      result.hidden = false;
+      return;
+    }
     result.querySelector('strong').textContent = 'Check the confirmation tab';
     result.querySelector('p').textContent = 'Google will confirm whether your RSVP was saved and your calendar invitation was sent. If no tab opens, please allow this form to open a new tab and submit again.';
     document.querySelector('#download-rsvp').hidden = true;
