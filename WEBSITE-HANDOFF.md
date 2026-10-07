@@ -138,7 +138,7 @@ The domain was shown as expiring October 7, 2027, auto-renew off. Recheck Namech
 - Duplicate request IDs/email are handled by the backend. Calendar failure preserves the RSVP and marks follow-up.
 - A blank endpoint activates the frontend's local draft fallback.
 
-For backend edits, copy `Code.gs` into the existing Apps Script project. Review configuration, then **Deploy → Manage deployments → Edit → New version** to retain the URL. A new deployment may require updating and publishing `rsvp-config.js`. The existing deployment executes as the owner and was observed with access set to **Anyone with Google account**. This setting was preserved during the design update; signed-out guest access has not been verified. Changing access is a separate permission decision. The owner handles Google authorization. See `integrations/SETUP.md` for project access.
+For backend edits, copy `Code.gs` into the existing Apps Script project. Review configuration, then **Deploy → Manage deployments → Edit → New version** to retain the URL. A new deployment may require updating and publishing `rsvp-config.js`. The existing deployment executes as the owner with access set to **Anyone**. The user approved removing the Google-login requirement on October 8, 2026. An unauthenticated POST with blank email returned attendance confirmed and RSVP saved; the endpoint was retained. The owner handles Google authorization. See `integrations/SETUP.md` for project access.
 
 ```sh
 node wedding-site/integrations/test.cjs
@@ -148,7 +148,7 @@ node --check wedding-site/dist/script.js
 
 Test with a user-authorized email; verify sheet row, receipt, and calendar result. Do not send unsolicited guest invitations or include private guest data/tokens in documentation.
 
-### October 8 RSVP fix and confirmation design
+### October 8 RSVP fix, confirmation design, and public access
 
 - Failure: submissions from the HTTP custom domain reached Apps Script with an invalid/empty request ID. The server logged `Invalid RSVP` and did not save a row. The frontend called HTTPS-only `crypto.randomUUID()` without a fallback.
 - Fix: `createRsvpRequestId()` in `dist/script.js` uses native `randomUUID()` when available, otherwise creates a valid UUID with `crypto.getRandomValues()`. If generation fails, submission is prevented and the page explains that the reply was not sent.
@@ -157,7 +157,11 @@ Test with a user-authorized email; verify sheet row, receipt, and calendar resul
 - Regression checks cover HTTP UUID generation, HTTPS path, unique valid IDs, blank email, and additional guests. Backend tests verify saved guest count/companion names and absence of calendar calls for blank email.
 - Receipt design: `receipt_()` in `integrations/Code.gs` now uses the existing calligraphy image from the HTTPS site, cream background, gold double frame, centered date/dividers, responsive contact links, and a Return to invitation button. All receipt types share the design while retaining their actual success/error messages. Names artwork is externally hosted; its image URL must remain valid.
 - Apps Script was updated through **Manage deployments → Edit → New version**, retaining the existing `/exec` endpoint and access settings. **Version 5**, deployed around **4:19 AM Philippine time**, contains the new design. No frontend endpoint change was required. Local source commit: `98949ac`.
-- A live no-email design test showed **Your attendance is confirmed** with the new artwork. Two clearly marked technical test rows were added during these checks; they are not real wedding attendees and were left in the sheet. Do not count them in attendance totals.
+- A live no-email design test showed **Your attendance is confirmed** with the new artwork. Three clearly marked technical test rows were added during these checks, including an unauthenticated access test; they are not real wedding attendees and were left in the sheet. Do not count them in attendance totals.
+
+### Public access update
+
+The previous **Anyone with Google account** restriction prevented guests without a Google login from submitting. With user confirmation, the existing deployment was changed to **Anyone**, keeping **Execute as: Me**, code **Version 5**, and the same `/exec` URL. An unauthenticated no-email test returned **Your attendance is confirmed** and **Your RSVP is saved** without a login redirect. Existing validation and duplicate protection still apply; public access does not guarantee saving invalid submissions or bypass duplicate rules. An additional marked technical test row remains in the sheet. If a phone still fails, retry in its normal browser and capture the exact receipt/error before diagnosing another cause.
 
 ## PDF invitation creation
 
