@@ -285,3 +285,11 @@ body.invitation-closed .invitation-panels{opacity:0}body.invitation-revealing .i
 .attire-guidance p+h3{margin-top:48px}
 .attire-guidance>p{margin:0;line-height:1.6}
 @media(max-width:600px){.name-section{min-height:220px;padding:36px 20px}.name-section .name-garland{height:210px}.couple-signature .couple-lettering{max-width:320px}.attire-guidance p+h3{margin-top:40px}}
+/* Keep both floral arrangements inside narrow invitation views. */
+@media(max-width:900px){
+  .name-section{min-height:260px;padding:40px 12px}
+  .name-section h1{width:70%}
+  .name-section .name-garland{width:22%;max-width:110px;height:230px;object-fit:contain}
+  .name-section .left-garland{left:0}
+  .name-section .right-garland{right:0}
+}
