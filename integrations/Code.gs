@@ -45,7 +45,7 @@ function doPost(e) {
       if (!calendar) throw new Error('Wedding calendar is unavailable.');
       const event = calendar.createEvent(RSVP_CONFIG.title, new Date(RSVP_CONFIG.start), new Date(RSVP_CONFIG.end), {
         location: RSVP_CONFIG.location,
-        description: 'Celebrate Benj and Rosette’s wedding. Ceremony at 2:00 PM, Philippine time. Reception at 4:00 PM at Priscilla Crystal Palace, San Sebastian, Kawit, Cavite. Wedding celebration from 2:00 PM to 8:00 PM Philippine time; individual reception activity timings will be confirmed.',
+        description: 'Celebrate Benj and Rosette’s wedding. Ceremony at 2:00 PM, Philippine time. Reception at 4:00 PM at Priscilla Crystal Palace, San Sebastian, Kawit, Cavite. Wedding celebration from 2:00 PM to 8:00 PM Philippine time; individual reception activity timings will be confirmed.\n\nWedding invitation and details: https://benj-rosette-wedding.online/',
         guests: reply.email, sendInvites: true
       });
       event.setGuestsCanSeeGuests(false);

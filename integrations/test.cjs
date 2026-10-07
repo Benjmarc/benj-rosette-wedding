@@ -17,7 +17,7 @@ const context = {
  console:{error(){}}, Date, String, Number, Error,
  LockService:{getScriptLock:()=>({waitLock(){},hasLock:()=>true,releaseLock(){}})},
  SpreadsheetApp:{openById:id=>{assert.equal(id,'1xePq4sAfklgYcFMY2u2T6E5dza5oxioVeURAAWZMSyA');return {getSheetById:gid=>{assert.equal(gid,74886443);return sheet;}};},flush(){}},
- CalendarApp:{getDefaultCalendar:()=>({createEvent(title,start,end,options){calendarCalls++;assert.equal(start.toISOString(),'2026-12-15T06:00:00.000Z');assert.equal(options.sendInvites,true);if(failCalendar)throw Error('Quota');return {setGuestsCanSeeGuests(){},setGuestsCanInviteOthers(){},getId:()=>`event-${calendarCalls}`};}})},
+ CalendarApp:{getDefaultCalendar:()=>({createEvent(title,start,end,options){calendarCalls++;assert.equal(start.toISOString(),'2026-12-15T06:00:00.000Z');assert.equal(options.sendInvites,true);assert.match(options.description,/Wedding invitation and details: https:\/\/benj-rosette-wedding\.online\//);if(failCalendar)throw Error('Quota');return {setGuestsCanSeeGuests(){},setGuestsCanInviteOthers(){},getId:()=>`event-${calendarCalls}`};}})},
  HtmlService:{createHtmlOutput:html=>html}
 };
 vm.createContext(context); vm.runInContext(fs.readFileSync(__dirname+'/Code.gs','utf8'),context);

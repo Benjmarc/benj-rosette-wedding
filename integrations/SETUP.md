@@ -24,3 +24,7 @@ Apps Script **Version 5** uses invitation-style receipts: existing calligraphy a
 Three clearly marked technical test rows were left in the spreadsheet during verification; exclude them from attendance counts.
 
 Public access was enabled on the existing Version 5 deployment without changing its URL or code version. Validation and duplicate checks still apply.
+
+## Calendar description update
+
+Version 6, deployed October 8, 2026 around 4:40 AM Philippine time, adds the wedding website link to newly created calendar invitation descriptions: https://benj-rosette-wedding.online/. Existing events were not changed or resent. The endpoint and public access settings are retained. Backend checks verify the link; no test email was sent for this change.
