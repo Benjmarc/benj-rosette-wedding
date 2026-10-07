@@ -332,5 +332,3 @@ body.invitation-closed .invitation-panels{opacity:0}body.invitation-revealing .i
 
 .envelope-intro .envelope-button{margin-top:28px;margin-bottom:14px}
 
-/* A centered peach rose welcomes guests in the menu. */
-.wedding-menu .menu-top-floral{display:block;width:min(210px,65%);height:auto;margin:0 auto 8px;pointer-events:none}
