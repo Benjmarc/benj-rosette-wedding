@@ -248,7 +248,7 @@ Derive the new crop from current BR bounds, excluding names/date. Encode and ins
 
 ## Messenger and social link preview
 
-The main page includes Open Graph and Twitter card metadata. Title: **Benj & Rosette — You're Invited!**. Description: **Join us on December 15, 2026 as we celebrate our wedding. View the details and confirm your attendance.** The image is `wedding-share-preview.jpg`, copied from the existing v13 gold monogram still (1920 × 1080). Local source asset is in `dist/assets/`; the live image is at the site root. Absolute HTTPS URLs identify the image and canonical website. Keep these tags in the static HTML head so crawlers can read them without opening the animated invitation.
+The main page includes Open Graph and Twitter card metadata. Title: **You're Invited!**. Description: **Join us on December 15, 2026 as we celebrate our wedding. View the details and confirm your attendance.** The image is `wedding-share-preview.jpg`, copied from the existing v13 gold monogram still (1920 × 1080). Local source asset is in `dist/assets/`; the live image is at the site root. Absolute HTTPS URLs identify the image and canonical website. Keep these tags in the static HTML head so crawlers can read them without opening the animated invitation.
 
 Social apps control preview cropping and whether the description is visible. Updating metadata does not guarantee old Messenger messages refresh. Use Meta's Sharing Debugger to request a fresh scrape if needed, and verify a newly shared link. No Messenger message was sent as part of adding these tags.
 
