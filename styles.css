@@ -322,3 +322,12 @@ body.invitation-closed .invitation-panels{opacity:0}body.invitation-revealing .i
 .name-section h1{width:100%;max-width:540px}
 .name-bottom-floral{display:block;width:min(260px,62vw);height:auto;margin:2px auto 4px;pointer-events:none}
 @media(max-width:600px){.name-bottom-floral{width:min(220px,60vw)}}
+
+/* The inner invitation card shares the shining gold BR animation. */
+.envelope-letter .letter-monogram-video{display:block;width:100px;max-width:40%;height:auto;aspect-ratio:1453/1083;object-fit:fill;-webkit-mask:url("benj-rosette-monogram.png") center/100% 100% no-repeat;mask:url("benj-rosette-monogram.png") center/100% 100% no-repeat}
+
+.envelope-date-ornament{display:flex;align-items:center;justify-content:center;gap:12px;width:min(220px,58vw);margin:12px auto 10px;color:#b59657;font-size:9px}
+.envelope-date-ornament:before,.envelope-date-ornament:after{content:"";height:1px;background:#b59657;flex:1}
+.envelope-intro .envelope-date{color:#b59657;text-transform:uppercase;letter-spacing:3px;font-size:clamp(16px,3.6vw,21px);font-weight:600}
+
+.envelope-intro .envelope-button{margin-top:28px;margin-bottom:14px}
