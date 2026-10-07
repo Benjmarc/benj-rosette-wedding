@@ -1,0 +1,24 @@
+const assert = require('node:assert/strict');
+const vm = require('node:vm');
+const fs = require('node:fs');
+const { webcrypto } = require('node:crypto');
+const source = fs.readFileSync(__dirname + '/../script.js', 'utf8');
+const start = source.indexOf('function createRsvpRequestId()');
+const end = source.indexOf('const rsvpEndpoint', start);
+const helper = source.slice(start, end);
+// Model an HTTP browser: crypto exists but randomUUID is unavailable.
+const context = vm.createContext({crypto: {getRandomValues: values => webcrypto.getRandomValues(values)}});
+vm.runInContext(helper, context);
+const ids = Array.from({length: 100}, () => context.createRsvpRequestId());
+assert.equal(new Set(ids).size, ids.length);
+for (const id of ids) assert.match(id, /^[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$/);
+const backend = vm.createContext({console});
+vm.runInContext(fs.readFileSync(__dirname + '/Code.gs', 'utf8'), backend);
+const reply = backend.validateReply_({name: 'HTTP Test Guest', email: '', attendance: 'Joyfully accepts', guests: '4', requestId: ids[0], message: 'Accompanying guests:\nGuest 2: Companion One\nGuest 3: Companion Two\nGuest 4: Companion Three'});
+assert.equal(reply.email, '');
+assert.equal(reply.guests, 4);
+assert.match(reply.message, /Companion Three/);
+const secure = vm.createContext({crypto: {randomUUID: () => ids[1]}});
+vm.runInContext(helper, secure);
+assert.equal(secure.createRsvpRequestId(), ids[1]);
+console.log('Passed: HTTP fallback, unique valid IDs, HTTPS path, no email and additional guests accepted by backend.');
