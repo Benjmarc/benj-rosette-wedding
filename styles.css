@@ -293,3 +293,8 @@ body.invitation-closed .invitation-panels{opacity:0}body.invitation-revealing .i
   .name-section .left-garland{left:0}
   .name-section .right-garland{right:0}
 }
+
+/* Matching floral frame: mirror the right arrangement on the left. */
+.name-section .name-garland{width:128px}
+.name-section .left-garland{left:-30px;transform:translateY(-50%) scaleX(-1)}
+@media(max-width:900px){.name-section .name-garland{width:22%;max-width:110px}.name-section .left-garland{left:0}}
