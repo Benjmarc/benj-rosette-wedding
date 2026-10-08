@@ -269,6 +269,24 @@ weddingMenu.addEventListener('close', () => {
   document.body.classList.remove('menu-is-open');
 });
 
+// A still image stays visible if a phone blocks autoplay or video fails.
+const monogramVideos = [...document.querySelectorAll('.monogram-media video')];
+function playMonograms() {
+  monogramVideos.forEach(video => {
+    video.muted = true;
+    video.defaultMuted = true;
+    video.playsInline = true;
+    const playback = video.play();
+    if (playback) playback.catch(() => video.classList.remove('is-playing'));
+  });
+}
+monogramVideos.forEach(video => {
+  video.addEventListener('playing', () => video.classList.add('is-playing'));
+  ['pause', 'error', 'emptied'].forEach(event => video.addEventListener(event, () => video.classList.remove('is-playing')));
+  video.closest('.monogram-media').addEventListener('click', playMonograms);
+});
+playMonograms();
+
 const envelopeIntro = document.querySelector('#envelope-intro');
 const openInvitation = document.querySelector('#open-invitation');
 function startInvitationAnimations() {
@@ -342,6 +360,7 @@ if (envelopeIntro && openInvitation) {
     openInvitation.disabled = true;
     // Start during the guest's click, before animation timers lose user activation.
     playWeddingMusic();
+    playMonograms();
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const finishReveal = () => {
       envelopeIntro.hidden = true;
@@ -354,6 +373,7 @@ if (envelopeIntro && openInvitation) {
       startInvitationAnimations();
       document.body.classList.add('invitation-revealing');
       document.body.classList.remove('invitation-closed');
+      playMonograms();
       if (!reducedMotion) afterEnvelopeTransition(envelopeIntro, 'transform', 1400, finishReveal);
       envelopeIntro.classList.add('envelope-revealed');
       if (reducedMotion) finishReveal();
