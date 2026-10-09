@@ -273,3 +273,5 @@ For another computer/tool, transfer this guide, `wedding-site/dist/`, `wedding-s
 ### Mobile monogram visibility
 
 Both the envelope card and opening invitation display a gold still beneath their videos. The still is extracted at 2 seconds from the existing cropped monogram clip (`benj-rosette-gold-monogram-poster.jpg`). Videos become visible only after `playing`, and fall back to the still when paused or failed. Opening the envelope retries muted inline playback during the user gesture and again after revealing the invitation. Phone power-saving or autoplay restrictions can still prevent animation; the gold BR remains visible. HTML uses updated CSS/JS query versions to refresh cached code. Verify both locations on mobile, including autoplay blocked.
+
+Mobile opening spacing: below 600px, the opening no longer fills the viewport or vertically centers its contents. Top padding scales from 180px to 225px to clear the floral; bottom padding is 40px. CSS cache version: `mobile-spacing-23`.
