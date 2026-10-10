@@ -275,3 +275,7 @@ For another computer/tool, transfer this guide, `wedding-site/dist/`, `wedding-s
 Both the envelope card and opening invitation display a gold still beneath their videos. The still is extracted at 2 seconds from the existing cropped monogram clip (`benj-rosette-gold-monogram-poster.jpg`). Videos become visible only after `playing`, and fall back to the still when paused or failed. Opening the envelope retries muted inline playback during the user gesture and again after revealing the invitation. Phone power-saving or autoplay restrictions can still prevent animation; the gold BR remains visible. HTML uses updated CSS/JS query versions to refresh cached code. Verify both locations on mobile, including autoplay blocked.
 
 Mobile opening spacing: below 600px, the opening no longer fills the viewport or vertically centers its contents. Top padding scales from 100px to 125px. The verse is centered with equal side margins and a narrower text column to clear the floral; bottom padding is 40px. CSS cache version: `mobile-spacing-25`.
+
+### Entourage name correction — October 10, 2026
+
+The witness name is **MRS. DIOSNELA GOMEZ** on the website and regenerated folded/Canva invitation PDFs. Update names in `dist/index.html`, then rebuild with `tmp/pdfs/build_folded_invitation.py` from the outer workspace. Both PDF exports were checked for the corrected name and the entourage panel was visually inspected.
