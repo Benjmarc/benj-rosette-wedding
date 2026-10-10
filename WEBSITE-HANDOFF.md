@@ -279,3 +279,7 @@ Mobile opening spacing: below 600px, the opening no longer fills the viewport or
 ### Entourage name correction — October 10, 2026
 
 The witness name is **MRS. DIOSNELA GOMEZ** on the website and regenerated folded/Canva invitation PDFs. Update names in `dist/index.html`, then rebuild with `tmp/pdfs/build_folded_invitation.py` from the outer workspace. Both PDF exports were checked for the corrected name and the entourage panel was visually inspected.
+
+### RSVP calendar invitations without Google Meet — October 10, 2026
+
+In the calendar owner’s Google Calendar Settings → Event settings, **Automatically add Google Meet video conferences to events I create** is disabled. The saved setting was verified in the signed-in owner account. `CalendarApp.createEvent` does not explicitly add conferencing, so no Apps Script redeployment is required. This account-wide preference also affects other newly created calendar events. Existing invitations and previously emailed Meet links were not modified or resent. Keep this option off when operating the RSVP backend.
