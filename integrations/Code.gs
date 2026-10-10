@@ -2,12 +2,13 @@ const RSVP_CONFIG = {
   spreadsheetId: '1xePq4sAfklgYcFMY2u2T6E5dza5oxioVeURAAWZMSyA',
   sheetId: 74886443,
   calendarId: 'primary',
+  sharedEventId: 'benjrosette20261215',
   start: '2026-12-15T14:00:00+08:00',
   end: '2026-12-15T20:00:00+08:00',
   location: 'Saint Joseph The Worker Chapel, Pedro Reyes St., Malagasang 1-G, Imus City, Cavite',
   title: 'Benj & Rosette — Wedding day'
 };
-const RSVP_HEADERS = ['Timestamp', 'Save the date!', 'Guest name', 'Email address', 'Number of guests', 'Dietary requirements', 'Message for the couple', 'Request ID', 'Calendar invitation', 'Calendar event ID'];
+const RSVP_HEADERS = ['Timestamp', 'Save the date!', 'Guest name', 'Email address', 'Number of guests', 'Dietary requirements', 'Message for the couple', 'Request ID', 'Calendar invitation', 'Calendar event ID', 'Previous calendar event ID'];
 
 function doGet() {
   return receipt_('Wedding RSVP', 'Please submit your RSVP through Benj and Rosette’s wedding invitation.');
@@ -41,16 +42,8 @@ function doPost(e) {
     if (reply.attendance === 'Regretfully declines') return receipt_('Your RSVP is saved', 'Thank you for letting Benj and Rosette know. No calendar invitation was sent.');
     if (!reply.email) return receipt_('Your attendance is confirmed', 'Your RSVP is saved. No calendar invitation was sent because no email address was provided.');
     try {
-      const calendar = RSVP_CONFIG.calendarId === 'primary' ? CalendarApp.getDefaultCalendar() : CalendarApp.getCalendarById(RSVP_CONFIG.calendarId);
-      if (!calendar) throw new Error('Wedding calendar is unavailable.');
-      const event = calendar.createEvent(RSVP_CONFIG.title, new Date(RSVP_CONFIG.start), new Date(RSVP_CONFIG.end), {
-        location: RSVP_CONFIG.location,
-        description: 'Celebrate Benj and Rosette’s wedding. Ceremony at 2:00 PM, Philippine time. Reception at 4:00 PM at Priscilla Crystal Palace, San Sebastian, Kawit, Cavite. Wedding celebration from 2:00 PM to 8:00 PM Philippine time; individual reception activity timings will be confirmed.\n\nWedding invitation and details: https://benj-rosette-wedding.online/',
-        guests: reply.email, sendInvites: true
-      });
-      event.setGuestsCanSeeGuests(false);
-      event.setGuestsCanInviteOthers(false);
-      sheet.getRange(row, headers.indexOf('Calendar event ID') + 1).setValue(event.getId());
+      const event = inviteToSharedWedding_(reply);
+      sheet.getRange(row, headers.indexOf('Calendar event ID') + 1).setValue(event.id);
       sheet.getRange(row, headers.indexOf('Calendar invitation') + 1).setValue('Sent');
       return receipt_('Your attendance is confirmed', 'Your RSVP is saved and a Google Calendar invitation has been sent to your email address. Please check your inbox and accept the invitation.');
     } catch (calendarError) {
@@ -63,6 +56,102 @@ function doPost(e) {
     return receipt_('RSVP could not be completed', 'Please return to the invitation and check your details, or contact the couple. Your attendance has not been confirmed.');
   } finally { if (lock.hasLock()) lock.releaseLock(); }
 }
+// Run once as the calendar owner before deploying. Creates one event without
+// sending invitations; an explicit stable ID prevents duplicate wedding events.
+function initializeWeddingCalendar() {
+  const lock = LockService.getScriptLock();
+  lock.waitLock(30000);
+  try {
+    let event;
+    try {
+      event = Calendar.Events.get(RSVP_CONFIG.calendarId, RSVP_CONFIG.sharedEventId);
+    } catch (error) {
+      if (!/not found|404/i.test(String(error))) throw error;
+      event = Calendar.Events.insert({
+        id: RSVP_CONFIG.sharedEventId,
+        summary: RSVP_CONFIG.title,
+        start: {dateTime: RSVP_CONFIG.start, timeZone: 'Asia/Manila'},
+        end: {dateTime: RSVP_CONFIG.end, timeZone: 'Asia/Manila'},
+        location: RSVP_CONFIG.location,
+        description: 'Celebrate Benj and Rosette’s wedding. Ceremony at 2:00 PM, Philippine time. Reception at 4:00 PM at Priscilla Crystal Palace, San Sebastian, Kawit, Cavite. Wedding celebration from 2:00 PM to 8:00 PM Philippine time; individual reception activity timings will be confirmed.\n\nWedding invitation and details: https://benj-rosette-wedding.online/',
+        guestsCanSeeOtherGuests: false,
+        guestsCanInviteOthers: false,
+        guestsCanModify: false,
+        conferenceData: null
+      }, RSVP_CONFIG.calendarId, {sendUpdates: 'none', conferenceDataVersion: 1});
+    }
+    if (event.status === 'cancelled') throw new Error('The shared wedding event was cancelled. Restore it before accepting calendar invitations.');
+    console.log('Shared wedding calendar event ready: ' + event.id);
+    return event.id;
+  } finally { lock.releaseLock(); }
+}
+
+// Called inside doPost's script lock. Preserve existing attendee responses and
+// use sendUpdates so invitations reach Google and non-Google email addresses.
+function inviteToSharedWedding_(reply) {
+  const event = Calendar.Events.get(RSVP_CONFIG.calendarId, RSVP_CONFIG.sharedEventId);
+  if (event.status === 'cancelled' || event.attendeesOmitted) throw new Error('The shared wedding event is unavailable or its guest list is incomplete.');
+  const attendees = event.attendees || [];
+  if (attendees.some(guest => String(guest.email || '').toLowerCase() === reply.email)) return event;
+  attendees.push({email: reply.email, responseStatus: 'needsAction', additionalGuests: reply.guests - 1});
+  return Calendar.Events.patch({
+    attendees,
+    guestsCanSeeOtherGuests: false,
+    guestsCanInviteOthers: false,
+    guestsCanModify: false,
+    conferenceData: null
+  }, RSVP_CONFIG.calendarId, RSVP_CONFIG.sharedEventId, {sendUpdates: 'all', conferenceDataVersion: 1});
+}
+
+function existingWeddingReplies_() {
+  const sheet = SpreadsheetApp.openById(RSVP_CONFIG.spreadsheetId).getSheetById(RSVP_CONFIG.sheetId);
+  const values = sheet.getDataRange().getValues();
+  const headers = values[0].map(String);
+  const candidates = [];
+  let excludedTests = 0;
+  values.slice(1).forEach((row, index) => {
+    if (row[headers.indexOf('Save the date!')] !== 'Joyfully accepts') return;
+    const name = String(row[headers.indexOf('Guest name')] || '').trim();
+    if (/\b(test|codex|technical)\b/i.test(name)) { excludedTests++; return; }
+    const email = String(row[headers.indexOf('Email address')] || '').trim().toLowerCase();
+    if (!/^[^\s@,;]+@[^\s@,;]+\.[^\s@,;]+$/.test(email)) return;
+    candidates.push({row: index + 2, email, guests: Math.max(1, Number(row[headers.indexOf('Number of guests')]) || 1)});
+  });
+  return {sheet, candidates, excludedTests};
+}
+// Read-only preview: does not send invitations or change RSVP records.
+function previewExistingWeddingGuests() {
+  const data = existingWeddingReplies_();
+  console.log('Eligible saved RSVP email addresses: ' + new Set(data.candidates.map(reply => reply.email)).size + '; excluded marked test rows: ' + data.excludedTests);
+}
+// Run once only with approval to invite the existing saved RSVP guests.
+function migrateExistingWeddingGuests() {
+  const lock = LockService.getScriptLock();
+  lock.waitLock(30000);
+  try {
+    const data = existingWeddingReplies_();
+    const event = Calendar.Events.get(RSVP_CONFIG.calendarId, RSVP_CONFIG.sharedEventId);
+    if (event.status === 'cancelled' || event.attendeesOmitted) throw new Error('Shared wedding event unavailable or guest list incomplete');
+    const attendees = event.attendees || [];
+    let added = 0;
+    data.candidates.forEach(reply => {
+      if (attendees.some(guest => String(guest.email || '').toLowerCase() === reply.email)) return;
+      attendees.push({email: reply.email, responseStatus: 'needsAction', additionalGuests: reply.guests - 1});
+      added++;
+    });
+    if (added) Calendar.Events.patch({attendees, guestsCanSeeOtherGuests: false, guestsCanInviteOthers: false, guestsCanModify: false, conferenceData: null}, RSVP_CONFIG.calendarId, RSVP_CONFIG.sharedEventId, {sendUpdates: 'all', conferenceDataVersion: 1});
+    const headers = ensureHeaders_(data.sheet);
+    data.candidates.forEach(reply => {
+      const idCell = data.sheet.getRange(reply.row, headers.indexOf('Calendar event ID') + 1);
+      const previous = String(idCell.getValues()[0][0] || '');
+      if (previous && previous !== RSVP_CONFIG.sharedEventId) data.sheet.getRange(reply.row, headers.indexOf('Previous calendar event ID') + 1).setValue(previous);
+      idCell.setValue(RSVP_CONFIG.sharedEventId);
+      data.sheet.getRange(reply.row, headers.indexOf('Calendar invitation') + 1).setValue('Sent');
+    });
+    console.log('Added ' + added + ' existing guests to the shared wedding event; excluded marked test rows: ' + data.excludedTests + '. Earlier individual events were retained.');
+  } finally { lock.releaseLock(); }
+}
+
 function validateReply_(p) {
   const name = String(p.name || '').trim();
   const email = String(p.email || '').trim().toLowerCase();
