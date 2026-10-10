@@ -295,3 +295,7 @@ With explicit user approval, `migrateExistingWeddingGuests` added **3 existing R
 After code changes, redeploy the existing public web app using Manage deployments → Edit → New version, preserving Execute as owner, Anyone access, and its `/exec` URL. Backend tests cover shared-event reuse, invitations, guest privacy, retained attendee responses, historical migration, no-email/decline behavior, duplicate protection, and calendar failures. No synthetic live RSVP/email was submitted for this update; existing guest invitations were explicitly authorized.
 
 Live deployment verified: **Version 7**, October 10, 2026 at **2:36 PM Philippine time**, retained the existing public `/exec` URL. Shared-event initialization and migration completed successfully; migration reported 3 guests added. Google API acceptance was approved by the user.
+
+### Bridesmaids list update — October 10, 2026
+
+Removed MS. RICA ARSELL LACSON and MRS. MA. ANGELICA LACSON from **Bridesmaids** on the website and folded/Canva invitation exports. Their Maid of honor and To clothe us as one entries remain. Regenerated the invitation from the HTML entourage data and checked the panel layout.
