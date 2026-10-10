@@ -299,3 +299,7 @@ Live deployment verified: **Version 7**, October 10, 2026 at **2:36 PM Philippin
 ### Bridesmaids list update — October 10, 2026
 
 Removed MS. RICA ARSELL LACSON and MRS. MA. ANGELICA LACSON from **Bridesmaids** on the website and folded/Canva invitation exports. Their Maid of honor and To clothe us as one entries remain. Regenerated the invitation from the HTML entourage data and checked the panel layout.
+
+### Groomsmen list update — October 10, 2026
+
+Removed MR. ALVIN IAN ANDAYA from **Groomsmen** on the website and folded/Canva invitation exports. His **Best man** entry remains. Regenerated the invitation from the HTML entourage data and checked the panel layout.
